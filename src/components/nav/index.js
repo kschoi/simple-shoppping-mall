@@ -24,17 +24,19 @@ const Nav = ({ cartCount }) => {
         <Box as="li" pos="relative">
           <Link to="/cart">
             Cart
-            <Circle
-              boxSize={5}
-              pos="absolute"
-              left="100%"
-              bottom="50%"
-              bg="red.400"
-              color="white"
-              fontSize="sm"
-            >
-              {cartCount > 0 && <span>{cartCount}</span>}
-            </Circle>
+            {cartCount > 0 && (
+              <Circle
+                boxSize={5}
+                pos="absolute"
+                left="100%"
+                bottom="50%"
+                bg="red.400"
+                color="white"
+                fontSize="sm"
+              >
+                <span>{cartCount}</span>
+              </Circle>
+            )}
           </Link>
         </Box>
       </HStack>

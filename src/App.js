@@ -16,7 +16,7 @@ function App() {
   //장바구니에 선택한 물품 추가
   const handleAddToCart = (currentItem) => {
     setCartItems((prev) => {
-      const next = [...prev];
+      const next = JSON.parse(JSON.stringify(prev));
       if (next.some((item) => item.id === currentItem.id)) {
         let index = next.findIndex((item) => item.id === currentItem.id);
         next[index].quantity += 1;
