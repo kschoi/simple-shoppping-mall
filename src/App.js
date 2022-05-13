@@ -6,7 +6,7 @@ import Nav from "./components/nav";
 import Home from "./pages/Home";
 import ItemDetailView from "./pages/ItemDetailView";
 import Cart from "./pages/Cart";
-import mockItems from "./components/items/mock";
+import list from "./entities/item-list/mock";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -35,7 +35,7 @@ function App() {
 
   useEffect(() => {
     // 상품 데이터 불러오기
-    setItems(mockItems);
+    setItems(list);
 
     // cart state가 local storage에 있으면 불러오기
     if (localStorage.cartItems) {

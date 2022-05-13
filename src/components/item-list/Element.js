@@ -13,6 +13,7 @@ const ItemElement = ({ id, name, price, imageUrl }) => {
 
   return (
     <Box w="full" bg={bg} p="20px">
+      <Text>{id}</Text>
       <Link to={`/item/${id}`}>
         <AspectRatio ratio={1}>
           <Image src={imageUrl} alt={name} />
