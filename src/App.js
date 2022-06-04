@@ -6,7 +6,7 @@ import Nav from "./components/nav";
 import Home from "./pages/Home";
 import ItemDetailView from "./pages/ItemDetailView";
 import Cart from "./pages/Cart";
-import list from "./entities/item-list/mock";
+import list from "./entities/item/mock";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -48,12 +48,10 @@ function App() {
       <Nav cartCount={cartItems.length} />
       <Box as="section" p={4}>
         <Routes>
-          <Route path="/" element={<Home items={items} />} />
+          <Route path="/" element={<Home />} />
           <Route
             path="item/:id"
-            element={
-              <ItemDetailView items={items} addToCart={handleAddToCart} />
-            }
+            element={<ItemDetailView addToCart={handleAddToCart} />}
           />
           <Route path="cart" element={<Cart items={cartItems} />} />
         </Routes>

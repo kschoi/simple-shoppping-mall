@@ -1,25 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Box } from "@chakra-ui/react";
+// import Axios from "axios";
 
+import network from "../network";
+import { sleep } from "../utils/misc";
 import ItemList from "../components/item-list";
 import FetchMore from "../components/fetch-more";
-import mockData from "../entities/item-list/mock";
-import { dummyFetcher } from "../utils/dummyFetcher";
 
-const ITEMS_PER_PAGE = 10;
-const pageList = [];
-
-const getList = (page) => {
-  const start = ITEMS_PER_PAGE * page;
-  const end = start + ITEMS_PER_PAGE;
-
-  if (!pageList[page]) {
-    pageList[page] = mockData.slice(start, end);
-  }
-  console.log(`pageList[${page}]`, pageList[page]);
-
-  return pageList[page];
-};
+const ITEMS_PER_PAGE = 20;
 
 const Home = () => {
   const [page, setPage] = useState(0);
@@ -27,12 +15,42 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       setLoading(true);
-      const list = await dummyFetcher(getList, page);
-      setList((prev) => [...prev, ...list]);
+      // 1. fetch api
+      // fetch("https://jsonplaceholder.typicode.com/photos?_start=0&_limit=10")
+      //   .then((res) => res.json())
+      //   .then((data) => {
+      //     // console.log(data);
+      //   })
+      //   .catch((error) => {
+      //     console.debug(error);
+      //   });
+
+      // 2. axios
+      // Axios({
+      //   url: `https://jsonplaceholder.typicode.com/photos?_start=${start}&_limit=${ITEMS_PER_PAGE}`,
+      // })
+      //   .then((res) => {
+      //     setList((prev) => [...prev, ...res.data]);
+      //   })
+      //   .catch((error) => {
+      //     console.debug(error);
+      //   });
+
+      // 3. network service
+
+      await sleep(0);
+      const data = await network.apps().fetchItems({
+        params: {
+          _start: ITEMS_PER_PAGE * page,
+          _limit: ITEMS_PER_PAGE,
+        },
+      });
+      setList((prev) => [...prev, ...data]);
+
       setLoading(false);
-    }
+    };
     fetchData();
   }, [page]);
 

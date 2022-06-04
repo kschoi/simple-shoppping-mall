@@ -1,16 +1,31 @@
 import React, { useRef, useEffect } from "react";
 import { Spinner } from "@chakra-ui/react";
 
+// Observe config
+const config = {
+  // Use the whole screen as scroll area
+  root: null,
+  // Do not grow or shrink the root area
+  rootMargin: "0px",
+  // Threshold of 1.0 will fire callback when 100% of element is visible
+  threshold: 0.0,
+};
+
 const FetchMore = ({ loading, setPage }) => {
   const fetchMoreTrigger = useRef(null);
-  const fetchMoreObserver = new IntersectionObserver(([{ isIntersecting }]) => {
-    if (isIntersecting) setPage((prev) => prev + 1);
-  });
 
   useEffect(() => {
+    const fetchMoreObserver = new IntersectionObserver(
+      ([{ isIntersecting }]) => {
+        if (isIntersecting) setPage((prev) => prev + 1);
+      },
+      config
+    );
+
     fetchMoreObserver.observe(fetchMoreTrigger.current);
+
     return () => {
-      fetchMoreObserver.unobserve(fetchMoreTrigger.current);
+      fetchMoreObserver.disconnect();
     };
   }, []);
 
