@@ -52,6 +52,7 @@ const ItemDetailView = ({ addToCart }) => {
         <>
           {/* 1. spinner */}
           {/* <Spinner color="red.500" my={5} /> */}
+          {/* 2. skeleton */}
           <Skeleton pt="100%" />
           <SkeletonText mt="4" noOfLines={3} spacing="4" />
         </>
