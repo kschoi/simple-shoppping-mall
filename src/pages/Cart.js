@@ -23,15 +23,15 @@ const Cart = ({ items }) => {
   );
 
   return (
-    <section>
+    <Box p={5}>
       {items.length > 0 ? (
         <VStack spacing={4}>
-          {items.map(({ id, name, price, imageUrl, quantity }) => (
+          {items.map(({ id, name, price, thumbnailUrl, quantity }) => (
             <Flex key={id} w="full" bg={bg} alignItems="center">
               <Box w="100px" mr={4}>
                 <Link to={`/item/${id}`}>
                   <AspectRatio ratio={1}>
-                    <Image src={imageUrl} alt={name} />
+                    <Image src={thumbnailUrl} alt={name} />
                   </AspectRatio>
                 </Link>
               </Box>
@@ -47,7 +47,7 @@ const Cart = ({ items }) => {
         <div>장바구니에 담긴 상품이 없습니다.</div>
       )}
       <Box>결제 예정금액: {totalAmount}</Box>
-    </section>
+    </Box>
   );
 };
 

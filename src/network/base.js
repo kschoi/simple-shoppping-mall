@@ -17,7 +17,7 @@ export default class {
         return config;
       },
       (error) => {
-        return console.debug(error);
+        console.debug(error);
       }
     );
 

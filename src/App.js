@@ -3,6 +3,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import { Box } from "@chakra-ui/react";
 
 import Nav from "./components/nav";
+import Floating from "./components/floating";
 import Home from "./pages/Home";
 import ItemDetailView from "./pages/ItemDetailView";
 import Cart from "./pages/Cart";
@@ -46,7 +47,7 @@ function App() {
   return (
     <>
       <Nav cartCount={cartItems.length} />
-      <Box as="section" p={4}>
+      <Box as="section">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
@@ -56,6 +57,7 @@ function App() {
           <Route path="cart" element={<Cart items={cartItems} />} />
         </Routes>
       </Box>
+      <Floating />
     </>
   );
 }

@@ -9,17 +9,17 @@ import {
 import { Link } from "react-router-dom";
 
 const ItemElement = ({ id, title, price, thumbnailUrl }) => {
-  const bg = useColorModeValue("white", "gray.800");
-
   return (
-    <Box bg={bg} p="20px">
-      <Text>{id}</Text>
+    <Box>
+      <Text fontSize="lg">{id}</Text>
       <Link to={`/item/${id}`}>
         <AspectRatio ratio={1}>
           <Image src={thumbnailUrl} alt="" />
         </AspectRatio>
         <Text>{title}</Text>
-        <Text fontWeight="bold">{Number(price).toLocaleString()}</Text>
+        <Text fontWeight="bold">
+          {Number(price) ? Number(price).toLocaleString() : "10,000"}
+        </Text>
       </Link>
     </Box>
   );

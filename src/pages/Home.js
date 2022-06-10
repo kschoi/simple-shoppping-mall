@@ -3,7 +3,6 @@ import { Box } from "@chakra-ui/react";
 // import Axios from "axios";
 
 import network from "../network";
-import { sleep } from "../utils/misc";
 import ItemList from "../components/item-list";
 import FetchMore from "../components/fetch-more";
 
@@ -39,15 +38,17 @@ const Home = () => {
       //   });
 
       // 3. network service
-
-      await sleep(0);
-      const data = await network.apps().fetchItems({
-        params: {
-          _start: ITEMS_PER_PAGE * page,
-          _limit: ITEMS_PER_PAGE,
-        },
-      });
-      setList((prev) => [...prev, ...data]);
+      try {
+        const data = await network.apps().fetchItems({
+          params: {
+            _start: ITEMS_PER_PAGE * page,
+            _limit: ITEMS_PER_PAGE,
+          },
+        });
+        setList((prev) => [...prev, ...data]);
+      } catch (e) {
+        console.debug(`infinite scroll error: ${e}`);
+      }
 
       setLoading(false);
     };
@@ -56,7 +57,9 @@ const Home = () => {
 
   return (
     <Box pos="relative">
-      <ItemList list={list} />
+      <Box minH="100vh">
+        <ItemList list={list} />
+      </Box>
       <FetchMore loading={page !== 0 && loading} setPage={setPage} />
     </Box>
   );

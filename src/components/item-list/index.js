@@ -4,7 +4,11 @@ import ItemElement from "./Element";
 
 const ItemList = ({ list }) => {
   return (
-    <Grid gridTemplateColumns="repeat(2, 1fr)" gap={4}>
+    <Grid
+      gridTemplateColumns={{ base: "repeat(2, 1fr)", md: "repeat(4, 1fr)" }}
+      gap={5}
+      p={5}
+    >
       {list.map((item) => (
         <ItemElement key={item.id} {...item} />
       ))}
