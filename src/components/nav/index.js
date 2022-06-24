@@ -11,7 +11,7 @@ import {
   IconButton,
   Icon,
 } from "@chakra-ui/react";
-import { Moon, Sun, ShoppingCart } from "react-feather";
+import { Moon, Sun, ShoppingCart, User } from "react-feather";
 
 const Nav = ({ cartCount }) => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -38,6 +38,18 @@ const Nav = ({ cartCount }) => {
         </Text>
       </Link>
       <HStack spacing={2} alignItems="center">
+        <IconButton
+          onClick={toggleColorMode}
+          variant="unstyled"
+          icon={
+            <Icon
+              as={colorMode === "light" ? Sun : Moon}
+              boxSize={6}
+              strokeWidth="1.5"
+            />
+          }
+          aria-label="테마 변경"
+        />
         <Box pos="relative">
           <Link to="/cart">
             <Icon as={ShoppingCart} strokeWidth="1.5" boxSize={6} />
@@ -58,16 +70,9 @@ const Nav = ({ cartCount }) => {
           </Link>
         </Box>
         <IconButton
-          onClick={toggleColorMode}
           variant="unstyled"
-          icon={
-            <Icon
-              as={colorMode === "light" ? Sun : Moon}
-              boxSize={6}
-              strokeWidth="1.5"
-            />
-          }
-          aria-label="테마 변경"
+          icon={<Icon as={User} boxSize={6} strokeWidth="1.5" />}
+          aria-label="My 페이지"
         />
       </HStack>
     </Flex>
