@@ -12,7 +12,7 @@ const items = [
     title: "티셔츠",
     thumbnailUrl: "https://cdn.imweb.me/thumbnail/20210518/a098cae37bb7e.jpg",
     price: "29000",
-    quantity: "1",
+    quantity: 1,
   },
   {
     id: "2",
@@ -20,7 +20,7 @@ const items = [
     thumbnailUrl:
       "https://contents.sixshop.com/thumbnails/uploadedFiles/59826/product/image_1622135279973_750.jpg",
     price: "10000",
-    quantity: "1",
+    quantity: 1,
   },
   {
     id: "3",
@@ -28,7 +28,7 @@ const items = [
     thumbnailUrl:
       "https://img.gqkorea.co.kr/gq/2018/03/style_5aa635a19dd2d-1024x1024.jpg",
     price: "19000",
-    quantity: "1",
+    quantity: 1,
   },
 ];
 
@@ -37,7 +37,7 @@ const typeDefs = gql`
   type Item {
     id: ID!
     title: String!
-    quantity: String!
+    quantity: Int!
     price: String!
     thumbnailUrl: String!
   }
@@ -49,7 +49,7 @@ const typeDefs = gql`
     newItem(
       title: String!
       price: String!
-      quantity: String!
+      quantity: Int!
       thumbnailUrl: String!
     ): Item!
   }
