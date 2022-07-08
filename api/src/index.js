@@ -1,10 +1,18 @@
 const express = require("express");
 const { ApolloServer, gql } = require("apollo-server-express");
+require("dotenv").config();
+
+const db = require("./db");
+const models = require("./models");
+
+// 애플리케이션을 배포할 때는 다른 포트 번호를 지정할 수 있도록 해야 한다.
+// .env 파일에 명시된 포트 또는 포트 4000번에서 서버를 실행
+const port = process.env.PORT || 4000;
+// DB_HOST 값을 변수로 저장
+const DB_HOST = process.env.DB_HOST;
 
 // express를 이용하여 app 객체를 생성한다.
 const app = express();
-// 애플리케이션을 배포할 땐느 다른 포트 번호를 지정할 수 있도록 해야 한다.
-const port = process.env.PORT || 4000;
 
 const items = [
   {
@@ -12,7 +20,7 @@ const items = [
     title: "티셔츠",
     thumbnailUrl: "https://cdn.imweb.me/thumbnail/20210518/a098cae37bb7e.jpg",
     price: "29000",
-    quantity: "1",
+    quantity: 1,
   },
   {
     id: "2",
@@ -20,7 +28,7 @@ const items = [
     thumbnailUrl:
       "https://contents.sixshop.com/thumbnails/uploadedFiles/59826/product/image_1622135279973_750.jpg",
     price: "10000",
-    quantity: "1",
+    quantity: 1,
   },
   {
     id: "3",
@@ -28,7 +36,7 @@ const items = [
     thumbnailUrl:
       "https://img.gqkorea.co.kr/gq/2018/03/style_5aa635a19dd2d-1024x1024.jpg",
     price: "19000",
-    quantity: "1",
+    quantity: 1,
   },
 ];
 
@@ -37,7 +45,7 @@ const typeDefs = gql`
   type Item {
     id: ID!
     title: String!
-    quantity: String!
+    quantity: Int!
     price: String!
     thumbnailUrl: String!
   }
@@ -49,7 +57,7 @@ const typeDefs = gql`
     newItem(
       title: String!
       price: String!
-      quantity: String!
+      quantity: Int!
       thumbnailUrl: String!
     ): Item!
   }
@@ -58,25 +66,26 @@ const typeDefs = gql`
 // 스키마 필드를 위한 리졸버 함수 제공
 const resolvers = {
   Query: {
-    items: () => items,
-    item: (parent, args) => {
-      return items.find((item) => item.id === args.id);
+    items: async () => {
+      return await models.Item.find();
+    },
+    item: async (parent, args) => {
+      return await models.Item.findById(args.id);
     },
   },
   Mutation: {
-    newItem: (parent, args) => {
-      const itemValue = {
-        id: String(items.length + 1),
+    newItem: async (parent, args) => {
+      return await models.Item.create({
         title: args.title,
         price: args.price,
         quantity: args.quantity,
         thumbnailUrl: args.thumbnailUrl,
-      };
-      items.push(itemValue);
-      return itemValue;
+      });
     },
   },
 };
+
+db.connect(DB_HOST);
 
 async function startApolloServer(typeDefs, resolvers) {
   // 아폴로 서버 설정
