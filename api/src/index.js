@@ -64,9 +64,9 @@ const resolvers = {
     },
   },
   Mutation: {
-    Mutation: (parent, args) => {
+    newItem: (parent, args) => {
       const itemValue = {
-        id: String(notes.length + 1),
+        id: String(items.length + 1),
         title: args.title,
         price: args.price,
         quantity: args.quantity,
